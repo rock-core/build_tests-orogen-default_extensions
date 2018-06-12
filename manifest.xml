@@ -1,0 +1,8 @@
+<package>
+  <description brief="Package using default extensions">
+      This is used in various regression tests to verify the handling of default
+      extensions in imported projects
+  </description>
+  <depend package="base/cmake" />
+  <depend package="base/orogen/std" />
+</package>

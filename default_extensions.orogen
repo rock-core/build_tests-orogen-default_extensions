@@ -1,0 +1,26 @@
+name "default_extensions"
+
+class TestExtension < OroGen::Spec::TaskModelExtension
+end
+
+class ::OroGen::Spec::TaskContext
+    module Ext
+        def trigger_enabled_twice_bug_method
+        end
+    end
+    def trigger_enabled_twice_bug
+        # *Unconditionally*  register so that the code fails if enabled twice
+        ext = TestExtension.new("trigger_enabled_twice_bug")
+        extend Ext
+        register_extension(ext)
+    end
+end
+
+using_task_library 'logger'
+
+task_context "Task" do
+    # Verify that the extension gets enabled at the same point during code
+    # generation as well as during import
+    trigger_enabled_twice_bug_method
+end
+
